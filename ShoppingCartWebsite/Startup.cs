@@ -4,8 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShoppingCartDAL.EF;
+using ShoppingCartDAL.Initializers;
+using ShoppingCartDAL.Repos;
 
 namespace ShoppingCartWebsite
 {
@@ -21,7 +25,16 @@ namespace ShoppingCartWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(_ => Configuration);
+            services.AddDbContext<ShoppingCartDbContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetConnectionString("ShoppingCartDb")));
+
             services.AddMvc();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +44,12 @@ namespace ShoppingCartWebsite
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+
+                using (var serviceScope = app.ApplicationServices
+                    .GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    ShoppingCartInitializer.InitializeData(app.ApplicationServices);
+                }
             }
             else
             {
