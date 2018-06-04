@@ -11,6 +11,8 @@ Following technologies have been used to implment the shopping cart discount sol
 * ASP.NET CORE 2
 * EntityFramework Core 2
 * SQL LocalDB
+* Xunit & Moq
+* Visual Studio 2017 15.3
 
 # Design Patterns
 The following design patterns have been used:
