@@ -35,7 +35,7 @@ namespace ShoppingCartWebsite
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
-            services.AddScoped<IPriceCalculator, PriceCalculator>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
         }
 

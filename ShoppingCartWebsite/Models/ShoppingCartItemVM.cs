@@ -9,6 +9,8 @@ namespace ShoppingCartWebsite.Models
     public class ShoppingCartItemVM
     {
         public IEnumerable<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public decimal Total { get; set; }
+        public decimal GrossTotal { get; set; }
+        public decimal DiscountTotal { get; set; }
+        public decimal NetTotal => GrossTotal - DiscountTotal;
     }
 }

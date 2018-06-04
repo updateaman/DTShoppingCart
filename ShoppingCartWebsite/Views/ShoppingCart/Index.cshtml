@@ -28,7 +28,15 @@
         </form>
     }
     <div class="form-group">
-        <label asp-for="Total" class="control-label col-md-2"></label>
-        <span class="control-label col-md-2">@Model.Total</span>
+        <label asp-for="GrossTotal" class="control-label col-md-2"></label>
+        <span class="control-label col-md-2">@Model.GrossTotal</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DiscountTotal" class="control-label col-md-2"></label>
+        <span class="control-label col-md-2">@Model.DiscountTotal</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NetTotal" class="control-label col-md-2"></label>
+        <span class="control-label col-md-2">@Model.NetTotal</span>
     </div>
 </div>

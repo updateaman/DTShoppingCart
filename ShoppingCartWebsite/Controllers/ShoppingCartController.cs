@@ -13,21 +13,24 @@ namespace ShoppingCartWebsite.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
-        private readonly IPriceCalculator _priceCalculator;
+        private readonly IShoppingCartService _shoppingCartService;
 
-        public ShoppingCartController(IShoppingCartRepo shoppingCartRepo, IPriceCalculator priceCalculator)
+        public ShoppingCartController(IShoppingCartRepo shoppingCartRepo, IShoppingCartService shoppingCartService)
         {
             _shoppingCartRepo = shoppingCartRepo;
-            _priceCalculator = priceCalculator;
+            _shoppingCartService = shoppingCartService;
         }
 
         public async Task<IActionResult> Index()
         {
             var items = await _shoppingCartRepo.GetAllAsync();
+            var discounts = _shoppingCartService.GetDiscountDecorators(items);
+
             var model = new ShoppingCartItemVM
             {
                 ShoppingCartItems = items,
-                Total = _priceCalculator.CalculatePrice(items)
+                GrossTotal = _shoppingCartService.CalculatePrice(items),
+                DiscountTotal = discounts.Calculate()
             };
             return View(model);
         }
