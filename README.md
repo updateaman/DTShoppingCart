@@ -17,7 +17,7 @@ The following design patterns have been used:
 * Decorator pattern
 Select after reading
 https://stackoverflow.com/questions/2253475/discount-strategy-in-shopping-cart-and-orders and 
-https://stackoverflow.com/questions/2253475/discount-strategy-in-shopping-cart-and-orders
+https://softwareengineering.stackexchange.com/questions/130686/is-there-a-design-pattern-that-would-apply-to-discount-models
 * Factory pattern - selected from my own experience 
 
 # Further improvement
