@@ -48,7 +48,7 @@ namespace ShoppingCartTests.ControllerTests
 
             var result = actualView?.Model as IEnumerable<Product>;
             Assert.NotNull(result);
-            Assert.Equal(3, result.Count());
+            Assert.Equal(lstProduct.Count, result.Count());
 
         }
     }
