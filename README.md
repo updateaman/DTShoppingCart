@@ -15,7 +15,10 @@ Following technologies have been used to implment the shopping cart discount sol
 # Design Patterns
 The following design patterns have been used:
 * Decorator pattern
-* Factory pattern
+Select after reading
+https://stackoverflow.com/questions/2253475/discount-strategy-in-shopping-cart-and-orders and 
+https://stackoverflow.com/questions/2253475/discount-strategy-in-shopping-cart-and-orders
+* Factory pattern - selected from my own experience 
 
 # Further improvement
 Things which can be improved further;
