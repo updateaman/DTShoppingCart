@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ShoppingCartDAL.Models;
 using ShoppingCartDAL.Repos;
 using ShoppingCartServices.Decorators;
+using ShoppingCartServices.Interfaces;
 using ShoppingCartWebsite.Models;
 
 namespace ShoppingCartServices
@@ -13,16 +14,19 @@ namespace ShoppingCartServices
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
+        private readonly IDiscountFactory _discountFactory;
 
-        public ShoppingCartService(IShoppingCartRepo shoppingCartRepo)
+        public ShoppingCartService(IShoppingCartRepo shoppingCartRepo,
+            IDiscountFactory discountFactory)
         {
             _shoppingCartRepo = shoppingCartRepo;
+            _discountFactory = discountFactory;
         }
 
         public async Task<ShoppingCartItemVM> GetCartAsync()
         {
             var items = await _shoppingCartRepo.GetAllAsync();
-            var discounts = GetDiscountDecorators();
+            var discounts = _discountFactory.GetDiscounts();
 
             var model = new ShoppingCartItemVM
             {
@@ -71,18 +75,5 @@ namespace ShoppingCartServices
             return cartItems.Sum(c => c.Quantity * c.Product.Price);
         }
 
-        private static DiscountBaseDecorator GetDiscountDecorators()
-        {
-            DiscountBaseDecorator baseDiscount = new QuantityDiscountDecorator(null, "Milk", 4, 1);
-            baseDiscount = new QuantityADiscountBDecorator(baseDiscount, "Butter", "Bread", 2, 0.50M);
-            return baseDiscount;
-        }
-    }
-
-    public interface IShoppingCartService
-    {
-        Task<ShoppingCartItemVM> GetCartAsync();
-        Task AddItemAsyc(int productId);
-        Task UpdateItemAsync(ShoppingCartItem item);
     }
 }

@@ -11,6 +11,7 @@ using ShoppingCartDAL.EF;
 using ShoppingCartDAL.Initializers;
 using ShoppingCartDAL.Repos;
 using ShoppingCartServices;
+using ShoppingCartServices.Interfaces;
 
 namespace ShoppingCartWebsite
 {
@@ -36,6 +37,7 @@ namespace ShoppingCartWebsite
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IDiscountFactory, DiscountFactory>();
 
         }
 
