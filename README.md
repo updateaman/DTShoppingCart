@@ -9,7 +9,7 @@ Please make sure the following are installed on your machine:
 # Technologies 
 Following technologies have been used to implment the shopping cart discount solution:
 * ASP.NET CORE 2
-* EntityFramework Core 2
+* EntityFramework Core 2 (Code First Approach)
 * SQL LocalDB
 * Xunit & Moq
 * Visual Studio 2017 15.3
