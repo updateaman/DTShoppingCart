@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ShoppingCartDAL.Models;
 
 namespace ShoppingCartServices
 {
@@ -12,9 +13,9 @@ namespace ShoppingCartServices
             _base = discountBase;
         }
 
-        public virtual decimal Calculate()
+        public virtual decimal Calculate(IEnumerable<ShoppingCartItem> cartItems)
         {
-            return _base?.Calculate() ?? 0;
+            return _base?.Calculate(cartItems) ?? 0;
         }
     }
 }

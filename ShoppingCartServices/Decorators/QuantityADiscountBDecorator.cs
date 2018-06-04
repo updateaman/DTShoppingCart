@@ -12,29 +12,26 @@ namespace ShoppingCartServices.Decorators
         private readonly string _productB;
         private readonly int _quantity;
         private readonly decimal _discount;
-        private readonly IEnumerable<ShoppingCartItem> _cartItems;
         public QuantityADiscountBDecorator(DiscountBaseDecorator discountBase,
             string productA,
             string productB,
             int quantity,
-            decimal discount,
-            IEnumerable<ShoppingCartItem> cartItems) : base(discountBase)
+            decimal discount) : base(discountBase)
         {
             _productA = productA;
             _productB = productB;
             _quantity = quantity;
             _discount = discount;
-            _cartItems = cartItems;
         }
 
-        public override decimal Calculate()
+        public override decimal Calculate(IEnumerable<ShoppingCartItem> cartItems)
         {
-            var previousDiscount = base.Calculate();
+            var previousDiscount = base.Calculate(cartItems);
 
-            var itemA = _cartItems
+            var itemA = cartItems
                 .FirstOrDefault(c => string.Equals(c.Product.Name, _productA, StringComparison.InvariantCultureIgnoreCase));
 
-            var itemB = _cartItems
+            var itemB = cartItems
                 .FirstOrDefault(c => string.Equals(c.Product.Name, _productB, StringComparison.InvariantCultureIgnoreCase));
 
             if (itemA == null || itemB == null || itemA.Quantity < _quantity)
