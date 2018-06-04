@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCartDAL.EF;
@@ -14,14 +15,26 @@ namespace ShoppingCartDAL.Repos
             _db = db;
         }
 
-        //public ShoppingCartRepo(DbContextOptions<ShoppingCartDbContext> options)
-        //{
-        //    _db = new ShoppingCartDbContext(options);
-        //}
-
         public async Task<List<ShoppingCartItem>> GetAllAsync()
         {
-            return await _db.ShoppingCartItems.ToListAsync();
+            return await _db.ShoppingCartItems.Include(s => s.Product).ToListAsync();
+        }
+
+        public async Task<ShoppingCartItem> GetByProductIdAsync(int productId)
+        {
+            return await _db.ShoppingCartItems.Where(s => s.ProductId == productId).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateAsync(ShoppingCartItem item)
+        {
+            _db.ShoppingCartItems.Update(item);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task InsertAsync(ShoppingCartItem item)
+        {
+            await _db.ShoppingCartItems.AddAsync(item);
+            await _db.SaveChangesAsync();
         }
     }
 }

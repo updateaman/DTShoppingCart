@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ShoppingCartDAL.EF;
 using ShoppingCartDAL.Initializers;
 using ShoppingCartDAL.Repos;
+using ShoppingCartServices;
 
 namespace ShoppingCartWebsite
 {
@@ -34,6 +35,7 @@ namespace ShoppingCartWebsite
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();
+            services.AddScoped<IPriceCalculator, PriceCalculator>();
 
         }
 
@@ -45,10 +47,10 @@ namespace ShoppingCartWebsite
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
 
-                using (var serviceScope = app.ApplicationServices
-                    .GetRequiredService<IServiceScopeFactory>().CreateScope())
+                using (IServiceScope serviceScope = app.ApplicationServices
+                    .GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    ShoppingCartInitializer.InitializeData(app.ApplicationServices);
+                    //ShoppingCartInitializer.InitializeData(serviceScope);
                 }
             }
             else

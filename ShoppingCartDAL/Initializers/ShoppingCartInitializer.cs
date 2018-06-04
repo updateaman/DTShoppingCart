@@ -11,9 +11,9 @@ namespace ShoppingCartDAL.Initializers
 {
     public static class ShoppingCartInitializer
     {
-        public static void InitializeData(IServiceProvider serviceProvider)
+        public static void InitializeData(IServiceScope serviceProvider)
         {
-            var context = serviceProvider.GetService<ShoppingCartDbContext>();
+            var context = serviceProvider.ServiceProvider.GetService<ShoppingCartDbContext>();
             InitializeData(context);
         }
 
@@ -27,20 +27,21 @@ namespace ShoppingCartDAL.Initializers
 
         public static void ClearData(ShoppingCartDbContext context)
         {
-            ExecuteDeleteSQL(context, "ShoppingCartItems");
-            ExecuteDeleteSQL(context, "Products");
-            ResetIdentity(context, "ShoppingCartItems");
-            ResetIdentity(context, "Products");
+            ExecuteDeleteSQL(context, "[dbo].[ShoppingCartItems]");
+            ExecuteDeleteSQL(context, "[dbo].[Products]");
+            ResetIdentity(context, "[dbo].[ShoppingCartItems]");
+            ResetIdentity(context, "[dbo].[Products]");
         }
 
         public static void ExecuteDeleteSQL(ShoppingCartDbContext context, string tableName)
         {
-            context.Database.ExecuteSqlCommand($"Delete from {tableName}");
+            context.Database.ExecuteSqlCommand($"Delete from {tableName}", tableName);
+
         }
 
         public static void ResetIdentity(ShoppingCartDbContext context, string tableName)
         {
-            context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT (\"{tableName}\", RESEED, 0);");
+            context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT (\"{tableName}\", RESEED, 1);", tableName);
         }
 
         public static IEnumerable<Product> GetProducts()

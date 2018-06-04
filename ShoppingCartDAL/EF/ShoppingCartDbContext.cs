@@ -12,7 +12,7 @@ namespace ShoppingCartDAL.EF
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connString = "Server=(localdb)\\mssqllocaldb;Database=ShoppingCartCoreMVC;Trusted_Connection=True;MultipleActiveResultSets=true;";
+                var connString = "Server=(localdb)\\mssqllocaldb;Database=ShoppingCartDb;Trusted_Connection=True;MultipleActiveResultSets=true;";
                 optionsBuilder.UseSqlServer(connString);
             }
         }

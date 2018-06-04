@@ -1,0 +1,34 @@
+﻿@using System.Linq
+@using ShoppingCartDAL.Models
+@model ShoppingCartItemVM
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h2>Shopping Cart</h2>
+<a asp-controller="Home">Back to product list</a>
+
+<div class="form-horizontal">
+    @foreach (ShoppingCartItem item in Model.ShoppingCartItems)
+    {
+        <form asp-action="Update" asp-antiforgery="true">
+            <input name="Id" value="@item.Id" type="hidden" />
+            <input name="ProductId" value="@item.ProductId" type="hidden" />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ShoppingCartItems.First().Product.Name" class="control-label col-md-2"></label>
+                <span class="control-label col-md-2">@item.Product.Name</span>
+                <div class="col-md-2">
+                    <input name="Quantity" value="@item.Quantity" class="form-control" />
+                    <span asp-validation-for="ShoppingCartItems.First().Quantity" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </form>
+    }
+    <div class="form-group">
+        <label asp-for="Total" class="control-label col-md-2"></label>
+        <span class="control-label col-md-2">@Model.Total</span>
+    </div>
+</div>
