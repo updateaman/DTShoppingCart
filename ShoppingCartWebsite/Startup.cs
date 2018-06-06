@@ -52,7 +52,7 @@ namespace ShoppingCartWebsite
                 using (IServiceScope serviceScope = app.ApplicationServices
                     .GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    //ShoppingCartInitializer.InitializeData(serviceScope);
+                    ShoppingCartInitializer.InitializeData(serviceScope);
                 }
             }
             else
